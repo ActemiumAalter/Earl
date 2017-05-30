@@ -5,6 +5,11 @@ using System;
 
 namespace Earl.Tests
 {
+    public enum TestEnum
+    {
+        ValueA,
+        ValueB
+    }
     public class UriTemplateTester
     {
         #region Level 1
@@ -32,6 +37,14 @@ namespace Earl.Tests
             UriTemplate template = new UriTemplate("{datetime}");
             string result = template.Expand(new { datetime = datetime });
             Assert.Equal("2017-05-09T16%3A11%3A22.0000000%2B02%3A00", result);
+        }
+        [Fact]
+        public void ShouldExpandEnum()
+        {
+            var @enum = TestEnum.ValueA;
+            UriTemplate template = new UriTemplate("{enum}");
+            string result = template.Expand(new { @enum = @enum });
+            Assert.Equal("ValueA", result);
         }
         [Fact]
         public void ShouldExpandDouble()

@@ -108,8 +108,8 @@ namespace Earl.Reflection
         private static bool isSimpleType(Type type)
         {
             Type[] simpleTypes = new Type[]
-            { 
-                typeof(string), 
+            {
+                typeof(string),
                 typeof(byte), typeof(byte?),
                 typeof(sbyte), typeof(sbyte?),
                 typeof(short), typeof(short?),
@@ -123,9 +123,9 @@ namespace Earl.Reflection
                 typeof(float), typeof(float?),
                 typeof(Guid), typeof(Guid?),
                 typeof(DateTime), typeof(DateTime?),
-                typeof(DateTimeOffset), typeof(DateTimeOffset?), 
+                typeof(DateTimeOffset), typeof(DateTimeOffset?),
             };
-            return simpleTypes.Contains(type);
+            return type.GetTypeInfo().IsEnum || simpleTypes.Contains(type);
         }
     }
 }
