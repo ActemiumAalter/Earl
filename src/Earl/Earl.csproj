@@ -6,7 +6,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <VersionPrefix>0.1.0.0</VersionPrefix>
     <Authors>Truncon</Authors>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Earl</AssemblyName>
     <AssemblyOriginatorKeyFile>Earl.snk</AssemblyOriginatorKeyFile>
@@ -16,24 +16,17 @@
     <PackageTags>URL;template;RFC;6570;build</PackageTags>
     <PackageProjectUrl>http://github.com/jehugaleahsa/Earl</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>http://github.com/jehugaleahsa/Earl</RepositoryUrl>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+    <RepositoryUrl>http://github.com/jehugaleahsa/Earl</RepositoryUrl>  
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+ 
+ 
+  <ItemGroup> 
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
     <PackageReference Include="System.Reflection" Version="4.3.0" />
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>

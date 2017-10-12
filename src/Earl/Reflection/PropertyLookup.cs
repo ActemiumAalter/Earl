@@ -12,7 +12,7 @@ namespace Earl.Reflection
         {
             if (instance != null && isDictionaryType(instance.GetType()))
             {
-                return DictionaryPropertyLookup.Create((dynamic)instance);
+                return DictionaryPropertyLookup.Create(instance as IDictionary<string, object>);
             }
             else
             {
