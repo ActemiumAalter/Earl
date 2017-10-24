@@ -12,13 +12,25 @@ namespace Earl.Reflection
         {
             if (instance != null && isDictionaryType(instance.GetType()))
             {
-                return DictionaryPropertyLookup.Create(instance as IDictionary<string, object>);
+                var dictionary = instance as IDictionary<string, object>;
+                if (dictionary == null)
+                    dictionary = getObjectDictionary(instance as IDictionary);
+                return DictionaryPropertyLookup.Create(dictionary);
             }
             else
             {
                 return new ObjectPropertyLookup(instance);
             }
         }
+
+        private static IDictionary<string, object> getObjectDictionary(IDictionary dictionary)
+        {
+            var dict = new Dictionary<string, object>();
+
+            foreach (var key in dictionary.Keys)
+                dict[key.ToString()] = dictionary[key];
+            return dict;
+        } 
 
         private static bool isDictionaryType(Type type)
         {
@@ -109,6 +121,7 @@ namespace Earl.Reflection
         {
             Type[] simpleTypes = new Type[]
             {
+                typeof(bool),
                 typeof(string),
                 typeof(byte), typeof(byte?),
                 typeof(sbyte), typeof(sbyte?),

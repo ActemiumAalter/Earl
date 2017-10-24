@@ -83,7 +83,7 @@ namespace Earl.Tests
         public void ShouldExpandVariableDictionary()
         {
             UriTemplate template = new UriTemplate("{var}");
-            string result = template.Expand(new Dictionary<string,object> { { "var", "value" } });
+            string result = template.Expand(new Dictionary<string, object> { { "var", "value" } });
             Assert.Equal("value", result);
         }
 
@@ -265,10 +265,25 @@ namespace Earl.Tests
         [Fact]
         public void ShouldExpandVariablesWithEmptyInQueryContinuation()
         {
-            UriTemplate template = new UriTemplate("{&x,y,empty}");
-            string result = template.Expand(new { x = 1024, y = 768, empty = "" });
-            Assert.Equal("&x=1024&y=768&empty=", result);
+            UriTemplate template = new UriTemplate("{&x*,y,empty}");
+            string result = template.Expand(new { x = new[] { 1024, 512 }, y = 768, empty = "" });
+            Assert.Equal("&x=1024&x=512&y=768&empty=", result);
         }
+        [Fact]
+        public void ShouldExpandVariablesWithEmptyInQueryContinuationBoolean()
+        {
+            UriTemplate template = new UriTemplate("{&x*,y,empty}");
+            string result = template.Expand(new { x = new bool[] { true, false }, y = false, empty = "" });
+            Assert.Equal("&x=True&x=False&y=False&empty=", result);
+        }
+        [Fact]
+        public void ShouldExpandQuerySeparate()
+        {
+            UriTemplate template = new UriTemplate("test{?x}{&y}");
+            string result = template.Expand(new { x = 1024, y = true });
+            Assert.Equal("&x=1024&y=True", result);
+        }
+
 
         #endregion
 
@@ -310,8 +325,8 @@ namespace Earl.Tests
         public void ShouldExpandPairs()
         {
             UriTemplate template = new UriTemplate("{keys}");
-            string result = template.Expand(new 
-            { 
+            string result = template.Expand(new
+            {
                 keys = new
                 {
                     semi = ";",
@@ -486,7 +501,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsWhenInFragmentExpansion()
         {
             UriTemplate template = new UriTemplate("{#keys}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -574,7 +589,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsWhenInLabelExpansion()
         {
             UriTemplate template = new UriTemplate("X{.keys}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -606,7 +621,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsWhenExplodedInLabelExpansion()
         {
             UriTemplate template = new UriTemplate("X{.keys*}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -622,7 +637,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsAsDictionaryWhenExplodedInLabelExpansion()
         {
             UriTemplate template = new UriTemplate("X{.keys*}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new Dictionary<string, string>()
                 {
@@ -654,8 +669,8 @@ namespace Earl.Tests
         public void ShouldExpandListAndVariableWithSizeLimiteInPathSegment()
         {
             UriTemplate template = new UriTemplate("{/list*,path:4}");
-            string result = template.Expand(new 
-            { 
+            string result = template.Expand(new
+            {
                 list = new string[] { "red", "green", "blue" },
                 path = "/foo/bar"
             });
@@ -698,7 +713,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsWhenExplodedInPathSegment()
         {
             UriTemplate template = new UriTemplate("{/keys*}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -754,7 +769,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsForPathStyleParameters()
         {
             UriTemplate template = new UriTemplate("{;keys}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -786,7 +801,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsWhenExplodedForPathStyleParameters()
         {
             UriTemplate template = new UriTemplate("{;keys*}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -842,7 +857,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsInQuery()
         {
             UriTemplate template = new UriTemplate("{?keys}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -874,7 +889,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsWhenExplodedInQuery()
         {
             UriTemplate template = new UriTemplate("{?keys*}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -930,7 +945,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsInQueryContinuation()
         {
             UriTemplate template = new UriTemplate("{&keys}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new
                 {
@@ -978,7 +993,7 @@ namespace Earl.Tests
         public void ShouldExpandPairsAsDictionaryWhenExplodedInQueryContinuation()
         {
             UriTemplate template = new UriTemplate("{&keys*}");
-            string result = template.Expand(new 
+            string result = template.Expand(new
             {
                 keys = new Dictionary<string, string>()
                 {
