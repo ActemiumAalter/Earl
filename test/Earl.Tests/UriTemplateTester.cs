@@ -70,6 +70,14 @@ namespace Earl.Tests
             string result = template.Expand(new { @int = @int });
             Assert.Equal("10458", result);
         }
+        [Fact]
+        public void ShouldExpandDecimal()
+        {
+            decimal dec = 154.45M;
+            UriTemplate template = new UriTemplate("{dec}");
+            string result = template.Expand(new { dec = dec });
+            Assert.Equal("154.45", result);
+        }
 
         [Fact]
         public void ShouldExpandVariableWithReservedCharacter()
@@ -279,9 +287,9 @@ namespace Earl.Tests
         [Fact]
         public void ShouldExpandQuerySeparate()
         {
-            UriTemplate template = new UriTemplate("test{?x}{&y}");
+            UriTemplate template = new UriTemplate("{?x}{&y}");
             string result = template.Expand(new { x = 1024, y = true });
-            Assert.Equal("&x=1024&y=True", result);
+            Assert.Equal("?x=1024&y=True", result);
         }
 
 
