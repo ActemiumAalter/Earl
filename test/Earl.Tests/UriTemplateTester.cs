@@ -39,6 +39,14 @@ namespace Earl.Tests
             Assert.Equal("2017-05-09T16%3A11%3A22.0000000%2B02%3A00", result);
         }
         [Fact]
+        public void ShouldExpandTimeSpan()
+        {
+            var timespan = TimeSpan.FromSeconds(100);
+            UriTemplate template = new UriTemplate("{timespan}");
+            string result = template.Expand(new { datetime = timespan });
+            Assert.Equal("00%3A01%3A40", result);
+        }
+        [Fact]
         public void ShouldExpandEnum()
         {
             var @enum = TestEnum.ValueA;

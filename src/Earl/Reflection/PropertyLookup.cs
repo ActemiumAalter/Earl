@@ -136,6 +136,7 @@ namespace Earl.Reflection
                 typeof(float), typeof(float?),
                 typeof(Guid), typeof(Guid?),
                 typeof(DateTime), typeof(DateTime?),
+                typeof(TimeSpan), typeof(TimeSpan?),
                 typeof(DateTimeOffset), typeof(DateTimeOffset?),
             };
             return type.GetTypeInfo().IsEnum || simpleTypes.Contains(type);
