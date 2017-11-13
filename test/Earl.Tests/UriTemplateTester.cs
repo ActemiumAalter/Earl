@@ -55,6 +55,14 @@ namespace Earl.Tests
             Assert.Equal("10.458", result);
         }
         [Fact]
+        public void ShouldExpandNullableDouble()
+        {
+            double? @double = null;
+            UriTemplate template = new UriTemplate("{?double}");
+            string result = template.Expand(new { @double = @double });
+            Assert.Equal("?double=", result);
+        }
+        [Fact]
         public void ShouldExpandFloat()
         {
             var @float = 10.458f;
