@@ -124,7 +124,7 @@ namespace Earl
             }
             else
             {
-                return WebUtility.UrlEncode(value);
+                return Uri.EscapeUriString(value);
             }
         }
     }
