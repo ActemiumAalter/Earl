@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using Earl.Reflection;
 using System.Globalization;
+using System.Web;
 
 namespace Earl
 {
@@ -124,8 +125,20 @@ namespace Earl
             }
             else
             {
-                return Uri.EscapeUriString(value);
+                //return WebUtility.UrlEncode(value);
+                return encode(value);
             }
+        }
+
+        private static string encode(string value)
+        {
+            // Temporarily replace spaces with the literal -SPACE-
+            string url = value.Replace(" ", "-SPACE-");
+            url = WebUtility.UrlEncode(url);
+
+            // Some servers have issues with ( and ), but UrlEncode doesn't 
+            // affect them, so we include those in the encoding as well.
+            return url.Replace("-SPACE-", "%20").Replace("(", "%28").Replace(")", "%29");
         }
     }
 }

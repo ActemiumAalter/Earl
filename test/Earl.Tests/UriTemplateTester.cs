@@ -43,7 +43,7 @@ namespace Earl.Tests
         {
             var timespan = TimeSpan.FromSeconds(100);
             UriTemplate template = new UriTemplate("{timespan}");
-            string result = template.Expand(new { datetime = timespan });
+            string result = template.Expand(new { timespan = timespan });
             Assert.Equal("00%3A01%3A40", result);
         }
         [Fact]
@@ -100,7 +100,7 @@ namespace Earl.Tests
         {
             UriTemplate template = new UriTemplate("{hello}");
             string result = template.Expand(new { hello = "Hello World!" });
-            Assert.Equal("Hello+World!", result);
+            Assert.Equal("Hello%20World!", result);
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace Earl.Tests
         {
             UriTemplate template = new UriTemplate("{hello}");
             string result = template.Expand(new Dictionary<string, object> { { "hello", "Hello World!" } });
-            Assert.Equal("Hello+World!", result);
+            Assert.Equal("Hello%20World!", result);
         }
         #endregion
 
@@ -179,7 +179,7 @@ namespace Earl.Tests
         {
             UriTemplate template = new UriTemplate("{x,hello,y}");
             string result = template.Expand(new { x = "1024", hello = "Hello World!", y = 768 });
-            Assert.Equal("1024,Hello+World!,768", result);
+            Assert.Equal("1024,Hello%20World!,768", result);
         }
 
         [Fact]
